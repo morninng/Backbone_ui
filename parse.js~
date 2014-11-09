@@ -1,0 +1,29 @@
+
+(function(){
+ 
+    Parse.initialize("LkKDU0HrRScYsxDhYIrrwr8N2IzT1lTRGki1Y6xG", "THUTYTEiAzF4wDHjhzeyjNGk0cOsOANRLWahmmOO");
+    var NikkeiData = Parse.Object.extend("NikkeiData");
+    var nikkei_data = new NikkeiData();
+    var object = [];
+    var articlelist_string;
+    var query = new Parse.Query(NikkeiData);
+    query.equalTo("Country", "yokohama");
+    query.find({
+	     success: function(results) {
+			articlelist_string = "<ul>"; 
+			for(var i=0; i < results.length; i++){
+				object[i] = results[i];
+				articlelist_string = articlelist_string  +"<li>"  + object[i].get("title") +  " - " + object[i].get("body") + "</li>";
+			};
+			articlelist_string = articlelist_string + "</ul>";
+			document.getElementById("tokyo_article_list").innerHTML=articlelist_string;
+            alert("succeed ");
+		  },
+        error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
+		}
+    });
+
+
+}());
+
