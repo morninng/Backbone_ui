@@ -1,14 +1,14 @@
 
-var TimelineView = Backbone.View.extend({
+var ContentListView = Backbone.View.extend({
 
 	initialize:  function(options){
 		self=this;
-		console.log("timeline view");
+		console.log("content list view");
 		self.render();
 		return self;
 	},
 
-	template: _.template( $('#timeline-template').html()),
+	template: _.template( $('#tab-content-template').html()),
 
 	render: function(){
 		var self=this;

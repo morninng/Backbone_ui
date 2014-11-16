@@ -1,10 +1,10 @@
 window.App = {};
 
 
+  var router = new Mixidea_Router();
 
 (function(){
 
-  var router = new Mixidea_Router();
 
   console.log("");
 

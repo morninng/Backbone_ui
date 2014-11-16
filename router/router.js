@@ -3,13 +3,26 @@
     routes: {
       'create': 'add',
       ':id/edit': 'edit',
+      'context_list': 'showContextList',
+      'event_list': 'showEventList',
+      'create-new-event': 'create_new_event',
+      'create-new-context': 'create_new_context',
       '*default': 'defaultRoute'
     },
     defaultRoute: function() {
       this.showContextList();
-      this.navigate('ContextList');
+    },
+    showEventList: function() {
+      this.navigate('EventList');
+      this.RenderHeader();
+      var event_view = new EventListView({
+        el: '#main-context'
+      });
+
+
     },
     showContextList: function(){
+      this.navigate('context_list');
       this.RenderHeader();
       var context_query = new Parse.Query(SpeechContext);
       var context_collection = new ContextCollection();
@@ -19,9 +32,9 @@
           for(var i=0;i <results.length; i++){
             context_collection.add(results[i]);
           }
-          var timeline_view = new TimelineView({
+          var content_view = new ContentListView({
             collection:context_collection,
-            el: '#main-context-container'
+            el: '#main-context'
           });
         },
         error: function(error){
@@ -29,6 +42,7 @@
         }
       });
     },
+
     RenderHeader: function(){
 
      var currentUser = Parse.User.current();
@@ -50,9 +64,9 @@
      }
 
     },
-    signup: function(){
+    create_new_event: function(){
     },
-    timeline: function(){
+    create_new_event: function(){
     },
     create_context: function(){
     },
