@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parse Example</title>
+
+
+
+    <script src="./lib/js/jquery-2.1.1.min.js"></script>
+    <script src="./lib/js/json2.js"></script>
+    <script src="./lib/js/underscore-min.js"></script>
+    <script src="./lib/js/backbone-min.js"></script>
+    <script src="./lib/js/backbone.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.0.min.js"></script>
+
+</head>
+<body>
+
+<h2>SpeechContext</h2>
+
+<form id="create_speech" action="">
+ <p> title<input type="text" id="title"></p>
+ <p>description<input type="text" id="description"></p>
+<p> speech file <input type="file" id="SpeechFile"  onclick></p>
+<p> Picture related to speech <input type="file" id="SpeechPicture" multiple onclick></p>
+ <input type="button" value="upload " onclick="CreateSpeech()">
+</form>
+
+<script type="text/javascript"  src="./model/speech.js"></script>
+<script type="text/javascript"  src="./util/CreateSpeech.js"></script>
+
+</body>
+</html>
+

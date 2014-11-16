@@ -3,7 +3,7 @@ var HeaderView_Login = Backbone.View.extend({
 
 	initialize:  function(options){
 		self=this;
-		console.log("login");
+		console.log("login view");
 		self.render();
 		return self;
 	},
@@ -12,7 +12,6 @@ var HeaderView_Login = Backbone.View.extend({
 
 	render: function(){
 		var self=this;
-	//	var template = _.template($("#header_logeduser-template"));
 		var output = self.template();
 		self.$el.html(output);
 		return self;
