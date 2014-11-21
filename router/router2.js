@@ -66,24 +66,12 @@
     },
     
     create_new_context: function(){
-      this.navigate('ContentCreation');
-      var create_content_view = new ContentCreationView({
+ //     this.navigate('ContentCreation');
+      var create_content_view = new ContentCreationView2({
         model: new SpeechContext(),
         el: '#main-context'
       });
 
-      create_content_view.on('submit:form', function(attrs){
-        this.model.set( "title", attrs.title);
-        this.model.set( "description", attrs.description);
-        this.model.save(null,{
-          success: function(){
-            alert("aaa");
-          },
-          error: function(){
-            alert("bbb");
-          }
-        });
-      })
 
       
       

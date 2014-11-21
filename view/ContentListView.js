@@ -10,6 +10,8 @@ var ContentListView = Backbone.View.extend({
 
 	template: _.template( $('#tab-content-template').html()),
 
+	
+
 	render: function(){
 		var self=this;
 		var output = self.template({'content_collection':self.collection.toJSON()});

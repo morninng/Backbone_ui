@@ -5,6 +5,8 @@ var SpeechContext = Parse.Object.extend("SpeechContext", {
       picture: null,
       speech_file: null,
       transcription_file: null, 
+      title: '',
+      description: ''
     }
 });
 
