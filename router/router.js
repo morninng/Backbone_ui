@@ -8,23 +8,45 @@
       'create-new-event': 'create_new_event',
       'create-new-context': 'create_new_context',
     //  '*default': 'defaultRoute',
-      '': 'showContextList'
+      '': 'defaultRoute'
     },
     defaultRoute: function() {
+      this.RenderHeader();
+      this.RenderTab();
       this.showContextList();
     },
+    RenderHeader: function(){
+     var currentUser = Parse.User.current();
+     if (currentUser) {
+       var query = new Parse.Query(MixidiaUser);  
+       query.get(currentUser.id, {
+       success: function(mixidea_user) {
+         var header_view = new HeaderView_LogedUser({model: mixidea_user, el: '#header-container'});
+         header_view.render();
+       },
+       error: function(object, error) {
+         var header_view = new HeaderView_Login({el: '#header-container'});
+         header_view.render();
+       }
+      });
+     } else {
+       var header_view = new HeaderView_Login({el: '#header-container'});
+         header_view.render();
+     }
+    },
+    RenderTab: function(){
+      var tab_view = new TabView({
+        el: '#tab-container'
+      });
+    },
     showEventList: function() {
-      this.navigate('EventList');
-      this.RenderHeader();
+      this.navigate('EventList', {trigger: false});
       var event_view = new EventListView({
         el: '#main-context'
       });
-
-
     },
     showContextList: function(){
-      this.navigate('context_list');
-      this.RenderHeader();
+      this.navigate('context_list', {trigger: false});
       var context_query = new Parse.Query(SpeechContext);
       var context_collection = new ContextCollection();
       context_query.limit(3);
@@ -44,27 +66,6 @@
       });
     },
 
-    RenderHeader: function(){
-
-     var currentUser = Parse.User.current();
-     if (currentUser) {
-       var query = new Parse.Query(MixidiaUser);  
-       query.get(currentUser.id, {
-       success: function(mixidea_user) {
-         var header_view = new HeaderView_LogedUser({model: mixidea_user, el: '#header-container'});
-         header_view.render();
-       },
-       error: function(object, error) {
-         var header_view = new HeaderView_Login({el: '#header-container'});
-         header_view.render();
-       }
-      });
-     } else {
-       var header_view = new HeaderView_Login({el: '#header-container'});
-         header_view.render();
-     }
-
-    },
     
     create_new_context: function(){
 
