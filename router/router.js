@@ -7,7 +7,8 @@
       'event_list': 'showEventList',
       'create-new-event': 'create_new_event',
       'create-new-context': 'create_new_context',
-      '*default': 'defaultRoute'
+    //  '*default': 'defaultRoute',
+      '': 'showContextList'
     },
     defaultRoute: function() {
       this.showContextList();
@@ -66,27 +67,7 @@
     },
     
     create_new_context: function(){
-      this.navigate('ContentCreation');
-      var create_content_view = new ContentCreationView({
-        model: new SpeechContext(),
-        el: '#main-context'
-      });
 
-      create_content_view.on('submit:form', function(attrs){
-        this.model.set( "title", attrs.title);
-        this.model.set( "description", attrs.description);
-        this.model.save(null,{
-          success: function(){
-            alert("aaa");
-          },
-          error: function(){
-            alert("bbb");
-          }
-        });
-      })
-
-      
-      
     },
     create_new_event: function(){
     },

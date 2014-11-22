@@ -14,6 +14,7 @@ var ContentCreationView = Backbone.View.extend({
 		var self=this;
 		var output = self.template({'contentmodel': self.model.toJSON()});
 		self.$el.html(output);
+		router.navigate("CreateContext", {trigger:false});
 		return self;
 	},
 
