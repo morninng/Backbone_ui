@@ -7,7 +7,6 @@
       'event_list': 'showEventList',
       'create-new-event': 'create_new_event',
       'create-new-context': 'create_new_context',
-    //  '*default': 'defaultRoute',
       '': 'defaultRoute'
     },
     defaultRoute: function() {
@@ -65,8 +64,6 @@
         }
       });
     },
-
-    
     create_new_context: function(){
 
     },

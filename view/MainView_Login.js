@@ -1,5 +1,5 @@
 
-var HeaderView_Login = Backbone.View.extend({
+var MainView_Login = Backbone.View.extend({
 
 	initialize:  function(options){
 		self=this;
@@ -9,17 +9,6 @@ var HeaderView_Login = Backbone.View.extend({
 	},
 
 	template: _.template( $('#header_login-template').html()),
-
-
-
-	events: {
-		'click #Login': 'Parse_Login'
-	},
-	Parse_Login: function(){
-		window.location.href = "./login.html";
-	},
-
-
 
 	render: function(){
 		var self=this;

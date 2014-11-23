@@ -27,6 +27,7 @@ var ContentCreationView = Backbone.View.extend({
    		var attrs = {};
     	attrs.title = this.$('#speechTitle').val();
     	attrs.description = this.$('#speechDescription').val();
+    	attrs.user = Parse.User.current();
     	this.trigger('submit:form', attrs);
     //	this.model.set( "title", );
     //	this.model.set( "description", this.$('#speechDescription').val() );
