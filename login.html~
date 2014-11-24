@@ -74,7 +74,7 @@
         } else {
           alert("User logged in through Facebook!");
 
-          window.location.href = "./main_mixidea.html";
+          window.location.href = "./main_mixidea_v6_loginbutton.html";
         }
       },
       error: function(user, error) {
