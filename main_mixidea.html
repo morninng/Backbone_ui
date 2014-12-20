@@ -80,6 +80,7 @@
       <div id="tab-container"></div>
       <div class="tab-content">
         <div id="main-context"></div>
+        <div id="main-additional"></div>
       </div> 
     </div>
 
@@ -94,7 +95,7 @@
   <script type="text/template" id="tab-event-template">
     <div class="tab-pane active" id="event_list">
       <div align="right">
-          <a href="#create-new-event" class="btn btn-primary btn-middle js-new" onclick="click_create_event()">
+          <a href="javascript:void(0);" id="create_event" class="btn btn-primary btn-middle js-new" >
             <span class="plyphicon plyphicon-plus"></span>
             Create New Event
           </a>
@@ -139,6 +140,30 @@
     </div>
   </script>
 
+
+  <script type="text/template" id="event-creation-template" >
+   <form enctype="multipart/form-data">
+    <div class="form-group">
+      <% var EventModel = eventmodel; %>
+      <label for="noteTitle">Event Title</label>
+      <input type="text" id="eventTitle" class="form-control js-noteTitle" value="<%= eventmodel.title  %>">
+    </div>
+    <div class="form-group">
+      <label for="noteBody">Event Description</label>
+      <textarea id="eventDescription" class="form-control js-noteBody" rows="4">
+        <%= eventmodel.description %>
+      </textarea>
+    </div>
+
+    <input type="date" id="event_date" name="date">
+    <input type="time" id="event_start_time" name="time">
+    <input type="number" id="event_duration" name="duration">
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </script>
+
+
+
   <script type="text/template" id="content-creation-template" >
    <form enctype="multipart/form-data">
     <div class="form-group">
@@ -171,6 +196,7 @@
 
      <script type="text/javascript" src="./config/parse_init.js"></script>
      <script type="text/javascript" src="./model/mixidea_user.js"></script>
+     <script type="text/javascript" src="./model/mixidea_event.js"></script>
      <script type="text/javascript" src="./model/speech.js"></script>
      <script type="text/javascript" src="./collection/ContextList.js"></script>
      <script type="text/javascript" src="./view/HeaderView_Login.js"></script>
@@ -178,10 +204,12 @@
      <script type="text/javascript" src="./view/ContentListView.js"></script>
      <script type="text/javascript" src="./view/EventListView.js"></script>
      <script type="text/javascript" src="./view/ContentCreationView.js"></script>
+     <script type="text/javascript" src="./view/EventCreationView.js"></script>
      <script type="text/javascript" src="./view/TabView.js"></script>
 
      <script type="text/javascript" src="./util/logout.js"></script>
      <script type="text/javascript" src="./util/login.js"></script>
+     <script type="text/javascript" src="./util/login_hangout.js"></script>
      <script type="text/javascript" src="./util/click_create_context.js"></script>
      <script type="text/javascript" src="./router/router.js"></script>
      <script type="text/javascript" src="./util/click_content_list.js"></script>
