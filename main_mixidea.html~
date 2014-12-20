@@ -124,7 +124,7 @@
             </a>
             <div class="media-body">
               <h4 class="media-heading"><%= one_content.title %> </h4>
-              <p class="text-right"><a href='./profile.html#show_profile/<%= one_content.AuthID %>'>By <%= one_content.AuthFirstName %> <%= one_content.AuthLastName  %></a> </p>
+              <p class="text-right"><a href='./profile.html#show_profile/<%= one_content.AuthID %>'>By <%= one_content.AuthFirstName %> <%= one_content.AuthLastName  %> </p>
               <p><%= one_content.description %></p>
               <ul class="list-inline list-unstyled">
                 <li><span><i class="glyphicon glyphicon-calendar"></i> <%= one_content.createdAt %> </span></li>
@@ -159,6 +159,11 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
   </script>
+
+
+
+
+
 
 
 

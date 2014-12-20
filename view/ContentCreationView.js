@@ -24,13 +24,18 @@ var ContentCreationView = Backbone.View.extend({
 
 	onSubmit: function(e) {
     	e.preventDefault();
-   		var attrs = {};
-    	attrs.title = this.$('#speechTitle').val();
-    	attrs.description = this.$('#speechDescription').val();
-    	attrs.user = Parse.User.current();
-    	this.trigger('submit:form', attrs);
-    //	this.model.set( "title", );
-    //	this.model.set( "description", this.$('#speechDescription').val() );
+
+    	var user_query = new Parse.Query(MixidiaUser);
+    	var user_id = Parse.User.current().id;
+    	user_query.equalTo("objectId", user_id);
+    	user_query.find().then(function(user_obj){
+			self.model.set( "title", self.$('#speechTitle').val());
+        	self.model.set( "description", self.$('#speechDescription').val());
+        	self.model.set("writer", user_obj[0]);
+        	return self.model.save();
+    	}).then(function(){
+    		console.log("success to save");
+    	});
 
   	}
 
