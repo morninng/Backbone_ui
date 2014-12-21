@@ -12,9 +12,8 @@ var EventListView = Backbone.View.extend({
 	},
 
 	events: {
-		'click #create_event': 'Create_event_view'
+		'click #create_event': 'Create_event_view',
 	},
-
 	showEventList: function(){
 		var self=this;
 		var EventCollection = Parse.Collection.extend({

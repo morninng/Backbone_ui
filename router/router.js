@@ -2,9 +2,9 @@
   var Mixidea_Router = Backbone.Router.extend({
     routes: {
       'create': 'add',
-      ':id/edit': 'edit',
       'context_list': 'showContextList',
       'event_list': 'showEventList',
+      'EventContext/:id': 'EventContext',
       'create-new-event': 'create_new_event',
       'create-new-context': 'create_new_context',
       '': 'defaultRoute'
@@ -37,6 +37,21 @@
       var tab_view = new TabView({
         el: '#tab-container'
       });
+    },
+    EventContext: function(id) {
+
+      var query = new Parse.Query(MixideaEvent);
+      query.get(id, {
+        success: function(event_obj) {
+          var event_context = new EventContext({
+            el: '#main-context',
+            model: event_obj
+          });
+        },
+        error: function(){
+          console.log("error");
+        }
+      })
     },
     showEventList: function() {
       this.navigate('EventList', {trigger: false});
