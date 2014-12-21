@@ -102,6 +102,32 @@
       </div>
       event list
     </div>
+
+    <% for (var i=0; i<event_collection.length; i++){ %>
+      <% var one_event = event_collection[i]; %>
+      <div class="well">
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading"><a href='/#show_profile/<%= one_event.objectId %>'><%= one_event.title %></a> </h4>
+            <p class="text-right">nnnnn </p>
+            <p><%= one_event.description %></p>
+            <ul class="list-inline list-unstyled">
+              <li><span><i class="glyphicon glyphicon-calendar"></i> <%= one_event.date %> </span></li>
+                  <li>|</li>
+                  <span><i class="glyphicon glyphicon-comment"></i> 2 participants 3 sheets remained</span>
+                  <li>|</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+
+
+
+
+
+
   </script>
 
 

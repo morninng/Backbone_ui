@@ -60,7 +60,7 @@ var CreateEventView = Backbone.View.extend({
         	self.model.set( "description", self.$('#eventDescription').val());
         	self.model.set("EventOwner", user_obj[0].id);
         	self.model.set("date", self.$('#event_date').val());
-        	self.model.set("start time", self.$('#event_start_time').val());
+        	self.model.set("StartTime", self.$('#event_start_time').val());
         	self.model.set("duration", self.$('#event_duration').val());
         	return self.model.save();
     	}).then(function(){
