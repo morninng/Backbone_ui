@@ -4,7 +4,7 @@
       'create': 'add',
       'context_list': 'showContextList',
       'event_list': 'showEventList',
-      'EventContext/:id': 'EventContext',
+      'EventContext/:id': 'ShowEventContext',
       'create-new-event': 'create_new_event',
       'create-new-context': 'create_new_context',
       '': 'defaultRoute'
@@ -38,7 +38,7 @@
         el: '#tab-container'
       });
     },
-    EventContext: function(id) {
+    ShowEventContext: function(id) {
 
       var query = new Parse.Query(MixideaEvent);
       query.get(id, {

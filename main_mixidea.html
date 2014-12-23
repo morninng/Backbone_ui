@@ -160,6 +160,24 @@
   </script>
 
 
+
+
+  <script type="text/template" id="one-event-context-template" >
+
+    <p>event title : <%= event_object.title %> </p>
+    <p>event description : <%= event_object.description %> </p>
+
+    <a href= '<%= event_object.hangout_link %>' style="text-decoration:none;">
+    <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png"
+    alt="Start a Hangout"
+    style="border:0;width:230px;height:60px;"/>
+    </a>
+
+  </script>
+
+
+
+
   <script type="text/template" id="event-creation-template" >
    <form enctype="multipart/form-data">
     <div class="form-group">
