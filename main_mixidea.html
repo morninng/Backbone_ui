@@ -160,18 +160,42 @@
   </script>
 
 
-
-
   <script type="text/template" id="one-event-context-template" >
 
-    <p>event title : <%= event_object.title %> </p>
-    <p>event description : <%= event_object.description %> </p>
-
-    <a href= '<%= event_object.hangout_link %>' style="text-decoration:none;">
+    <p> <h2> event title :  <%= event_object.title %> </h2> </p>
+    <p> <h2> event description :   <%= event_object.description %> </h2> </p>
+    click to join the discussion
+    <center><a href= '<%= event_object.hangout_link %>' style="text-decoration:none;">
     <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png"
     alt="Start a Hangout"
     style="border:0;width:230px;height:60px;"/>
-    </a>
+    </a></center><br>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Government</th><th>Opposition</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr>
+         <td>Prime Minister<br><span id="event_PM"></span><br><button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Leader of Opposition<br><span id="event_LO"></span><br><button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+       </tr>
+       <tr>
+         <td>Member of Government<span id="event_MG"></span><br><button id="join_MG" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Member of opposition<span id="event_MO"></span><br><button id="join_MO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+       </tr>
+       <tr>
+         <td>Reply of PM<span id="event_RPM"></span><br><button id="join_RLO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Reply of LO<span id="event_RLO"></span><br><button id="join_RPM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+       </tr>
+      </tbody>
+    </table>
+
+    <br>join as a Adjucator<br><br>
+
+    Join as a Audience(does not join in the hangout, just included in your schedule)<br><br>
 
   </script>
 
