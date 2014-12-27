@@ -173,13 +173,22 @@
 
     <table class="table table-bordered">
       <thead>
-        <tr>
+        <tr>PM_obj
           <th>Government</th><th>Opposition</th>
         </tr>
       </thead>
       <tbody>
        <tr>
-         <td>Prime Minister<br><span id="event_PM"></span><br><button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Prime Minister<br><span id="event_PM"></span><br>
+          <% if(participant_obj.PM_key) { %>
+            <a id="PM_link">
+              <img src= <%= participant_obj.PM_key.Profile_picture %> >
+              <p>Name: <%= participant_obj.PM_key.LastName %> </p>
+            </a>
+          <% }else{ %>
+            <button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
+          </td>
          <td>Leader of Opposition<br><span id="event_LO"></span><br><button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
        </tr>
        <tr>
@@ -187,8 +196,8 @@
          <td>Member of opposition<span id="event_MO"></span><br><button id="join_MO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
        </tr>
        <tr>
-         <td>Reply of PM<span id="event_RPM"></span><br><button id="join_RLO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
-         <td>Reply of LO<span id="event_RLO"></span><br><button id="join_RPM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Reply of PM<span id="event_RPM"></span><br><button id="join_RPM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Reply of LO<span id="event_LOR"></span><br><button id="join_LOR" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
        </tr>
       </tbody>
     </table>
@@ -254,12 +263,12 @@
     </div>
   </div>
 
-
      <script type="text/javascript" src="./config/parse_init.js"></script>
      <script type="text/javascript" src="./model/mixidea_user.js"></script>
      <script type="text/javascript" src="./model/mixidea_event.js"></script>
      <script type="text/javascript" src="./model/speech.js"></script>
      <script type="text/javascript" src="./collection/ContextList.js"></script>
+     <script type="text/javascript" src="./collection/Participants.js"></script>
      <script type="text/javascript" src="./view/EventContext.js"></script>
      <script type="text/javascript" src="./view/HeaderView_Login.js"></script>
      <script type="text/javascript" src="./view/HeaderView_LogedUser.js"></script>
