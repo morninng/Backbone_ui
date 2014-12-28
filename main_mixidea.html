@@ -181,7 +181,7 @@
        <tr>
         <td>Prime Minister:
           <% if(participant_obj.PM_key) { %>
-            <a id="PM_link"  href= ./profile.html#show_profile/<%= participant_obj.PM_key.id %> > <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %> </a>
+            <a href= ./profile.html#show_profile/<%= participant_obj.PM_key.idid %> > <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %> </a>
             <br>
             <img src= <%= participant_obj.PM_key.Profile_picture %> >
           <% }else{ %>
@@ -190,16 +190,60 @@
           <% } %>
         </td>
 
-        <td>Leader of Opposition:<br><span id="event_LO"></span><br><button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+        <td>Leader of Opposition:
+          <% if(participant_obj.LO_key) { %>
+            <a href= ./profile.html#show_profile/<%= participant_obj.LO_key.idid %> > <%= participant_obj.LO_key.FirstName %>  <%= participant_obj.LO_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.LO_key.Profile_picture %> >
+          <% }else{ %>
+            <span id="event_LO"></span>
+            <button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
         </td>
        </tr>
        <tr>
-         <td>Member of Government<span id="event_MG"></span><br><button id="join_MG" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
-         <td>Member of opposition<span id="event_MO"></span><br><button id="join_MO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Member of Government:
+          <% if(participant_obj.MG_key) { %>
+            <a href= ./profile.html#show_profile/<%= participant_obj.MG_key.idid %> > <%= participant_obj.MG_key.FirstName %>  <%= participant_obj.MG_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.MG_key.Profile_picture %> >
+          <% }else{ %>
+            <span id="event_MG"></span>
+            <button id="join_MG" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
+        </td>
+        <td>Member of opposition:
+          <% if(participant_obj.MO_key) { %>
+            <a href= ./profile.html#show_profile/<%= participant_obj.MO_key.idid %> > <%= participant_obj.MO_key.FirstName %>  <%= participant_obj.MO_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.MO_key.Profile_picture %> >
+          <% }else{ %>
+            <span id="event_MO"></span>
+            <button id="join_MO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
+        </td>
        </tr>
        <tr>
-         <td>Reply of PM<span id="event_RPM"></span><br><button id="join_RPM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
-         <td>Reply of LO<span id="event_LOR"></span><br><button id="join_LOR" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+         <td>Reply of PM:
+          <% if(participant_obj.PMR_key) { %>
+            <a href= ./profile.html#show_profile/<%= participant_obj.PMR_key.idid %> > <%= participant_obj.PMR_key.FirstName %>  <%= participant_obj.PMR_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.PMR_key.Profile_picture %> >
+          <% }else{ %>
+            <span id="event_RPM"></span>
+            <button id="join_RPM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
+        </td>
+         <td>Reply of LO:
+          <% if(participant_obj.LOR_key) { %>
+            <a href= ./profile.html#show_profile/<%= participant_obj.LOR_key.idid %> > <%= participant_obj.LOR_key.FirstName %>  <%= participant_obj.LOR_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.LOR_key.Profile_picture %> >
+          <% }else{ %>
+            <span id="event_LOR"></span>
+            <button id="join_LOR" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+          <% } %>
+        </td>
        </tr>
       </tbody>
     </table>

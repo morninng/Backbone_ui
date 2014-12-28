@@ -21,24 +21,107 @@ var EventContext = Backbone.View.extend({
 		'click #join_LO': 'Participate_LO',
 		'click #join_MG': 'Participate_MG',
 		'click #join_MO': 'Participate_MO',
-		'click #join_LOR': 'Participate_LOR',
 		'click #join_RPM': 'Participate_RPM',
-		'click #join_RPM': 'click_profile'
+		'click #join_LOR': 'Participate_LOR'
 	},
-
 	Participate_PM: function(){
 		console.log("participate as PM")
 		var currentUser = Parse.User.current();
 		self.model.fetch().then(function(event_obj){
 			if(event_obj.get("PrimeMinister")){
-				$("span#event_PM").append("<p>Prime Minister was already assingned to others. please register other role.<p>" );
+				$("span#event_PM").append("<p><font color='red'>Registration failed</font>Prime Minister was already assingned to others. please register other role.<p>" );
 				return null;
 			}else{
 				self.model.set("PrimeMinister",currentUser);
-				return self.model.save();
+				self.model.save(null,{
+					success: function(){
+						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Prime Minister<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
 			}
-		}).then(function(){
-			$("span#event_PM").append("<p>you have now joined this event as a Prime Minister<p>");
+		});
+	},
+	Participate_LO: function(){
+		console.log("participate as LO")
+		var currentUser = Parse.User.current();
+		self.model.fetch().then(function(event_obj){
+			if(event_obj.get("LeaderOpposition")){
+				$("span#event_LO").append("<p><font color='red'>Registration failed</font>Leader Opposition was already assingned to others. please register other role.<p>" );
+				return null;
+			}else{
+				self.model.set("LeaderOpposition",currentUser);
+				self.model.save(null,{
+					success: function(){
+						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
+			}
+		});
+	},
+	Participate_MG: function(){
+		console.log("participate as MG")
+		var currentUser = Parse.User.current();
+		self.model.fetch().then(function(event_obj){
+			if(event_obj.get("MemberGovernment")){
+				$("span#event_MG").append("<p><font color='red'>Registration failed</font>Member Government was already assingned to others. please register other role.<p>" );
+				return null;
+			}else{
+				self.model.set("MemberGovernment",currentUser);
+				self.model.save(null,{
+					success: function(){
+						$("span#event_MG").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Government<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
+			}
+		});
+	},
+	Participate_MO: function(){
+		console.log("participate as MO")
+		var currentUser = Parse.User.current();
+		self.model.fetch().then(function(event_obj){
+			if(event_obj.get("MemberOpposition")){
+				$("span#event_MO").append("<p><font color='red'>Registration failed</font>Member Opposition was already assingned to others. please register other role.<p>" );
+				return null;
+			}else{
+				self.model.set("MemberOpposition",currentUser);
+				self.model.save(null,{
+					success: function(){
+						$("span#event_MO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Opposition<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
+			}
+		});
+	},
+	Participate_RPM: function(){
+		console.log("participate as RPM")
+		var currentUser = Parse.User.current();
+		self.model.fetch().then(function(event_obj){
+			if(event_obj.get("ReplyPM")){
+				$("span#event_RPM").append("<p><font color='red'>Registration failed</font>Reply Prime Minister was already assingned to others. please register other role.<p>" );
+				return null;
+			}else{
+				self.model.set("ReplyPM",currentUser);
+				self.model.save(null,{
+					success: function(){
+						$("span#event_RPM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Reply of Prime Minister<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
+			}
 		});
 	},
 	Participate_LOR: function(){
@@ -46,14 +129,19 @@ var EventContext = Backbone.View.extend({
 		var currentUser = Parse.User.current();
 		self.model.fetch().then(function(event_obj){
 			if(event_obj.get("LOReply")){
-				$("span#event_LOR").append("<p>Leader Opposition Reply Role was already assingned to others. please register other role.<p>" );
+				$("span#event_LOR").append("<p><font color='red'>Registration failed</font>Leader Opposition Reply was already assingned to others. please register other role.<p>" );
 				return null;
 			}else{
-				self.model.set("LOReply",currentUser);
-				return self.model.save();
+				self.model.set("PrimeMinister",currentUser);
+				self.model.save(null,{
+					success: function(){
+						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition Reply<p>");	
+					},
+					error: function(){
+						alert("registration has been failed due to the network problem");
+					}
+				});
 			}
-		}).then(function(){
-			$("span#event_LOR").append("<p>you have now joined this event as a Leader Opposition Reply<p>");
 		});
 	},
 	AddHangoutButton: function(){
@@ -106,7 +194,7 @@ var EventContext = Backbone.View.extend({
 			participants.push(MO_object);
 			participant_role.push("MO_key");
 		}
-		var PMR_object = self.model.get("PMReply");
+		var PMR_object = self.model.get("ReplyPM");
 		if(PMR_object){
 			participants.push(PMR_object);
 			participant_role.push("PMR_key");
@@ -129,12 +217,10 @@ var EventContext = Backbone.View.extend({
 				var query_promise = user_query.find({
 					success: function(participant_o){
 
-						var testjson = {"aa":"bb","CC":"dd"};
-						var first_name = participant_o[0].get("FirstName");
 						var participant = {"FirstName":participant_o[0].get("FirstName"),
 										   "LastName":participant_o[0].get("LastName"),
 										   "Profile_picture":participant_o[0].get("Profile_picture"),
-										   "id":participant_o[0].id};
+										   "idid":participant_o[0].id};
 
 						console.log(JSON.stringify(participant));
 						participant_obj.set(participant_role[i],participant);
