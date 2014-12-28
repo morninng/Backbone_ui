@@ -23,11 +23,11 @@ var EventContext = Backbone.View.extend({
 		'click #join_MO': 'Participate_MO',
 		'click #join_RPM': 'Participate_RPM',
 		'click #join_LOR': 'Participate_LOR',
-		'click #cancel_PM': 'cancel_PM_participate',
-		'click #cancel_LO': 'cancel_LO_participate',
-		'click #cancel_MG': 'cancel_MG_participate',
-		'click #cancel_MO': 'cancel_MO_participate',
-		'click #cancel_RPM': 'cancel_RPM_participate',
+		'click #cancel_PM': 'cancel_PM_participate'
+		'click #cancel_LO': 'cancel_LO_participate'
+		'click #cancel_MG': 'cancel_MG_participate'
+		'click #cancel_MO': 'cancel_MO_participate'
+		'click #cancel_RPM': 'cancel_RPM_participate'
 		'click #cancel_LOR': 'cancel_LOR_participate'
 	},
 	cancel_PM_participate: function(){
