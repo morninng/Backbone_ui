@@ -22,7 +22,23 @@ var EventContext = Backbone.View.extend({
 		'click #join_MG': 'Participate_MG',
 		'click #join_MO': 'Participate_MO',
 		'click #join_RPM': 'Participate_RPM',
-		'click #join_LOR': 'Participate_LOR'
+		'click #join_LOR': 'Participate_LOR',
+		'click #cancel_PM': 'cancel_PM_participate'
+	},
+	cancel_PM_participate: function(){
+		console.log("cancel PM role");
+		var currentUser = Parse.User.current();
+
+		if(currentUser.id != self.model.get("PrimeMinister").id){
+			alert("you cannot change the status");
+		}else{
+			self.model.fetch().then(function(event_obj){
+				event_obj.unset("PrimeMinister");
+				return event_obj.save();
+			}).then(function(){
+				$("span#event_PM").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page and login<p>");
+			});
+		}
 	},
 	Participate_PM: function(){
 		console.log("participate as PM")
@@ -55,7 +71,7 @@ var EventContext = Backbone.View.extend({
 				self.model.set("LeaderOpposition",currentUser);
 				self.model.save(null,{
 					success: function(){
-						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition<p>");	
+						$("span#event_LO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition<p>");	
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -132,10 +148,10 @@ var EventContext = Backbone.View.extend({
 				$("span#event_LOR").append("<p><font color='red'>Registration failed</font>Leader Opposition Reply was already assingned to others. please register other role.<p>" );
 				return null;
 			}else{
-				self.model.set("PrimeMinister",currentUser);
+				self.model.set("LOReply",currentUser);
 				self.model.save(null,{
 					success: function(){
-						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition Reply<p>");	
+						$("span#event_LOR").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition Reply<p>");	
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -217,11 +233,21 @@ var EventContext = Backbone.View.extend({
 				var query_promise = user_query.find({
 					success: function(participant_o){
 
+						var yourself;
+						if (currentUser.id == participant_o[0].id){
+							yourself = true;
+						}else{
+							yourself = false;
+						}
+
 						var participant = {"FirstName":participant_o[0].get("FirstName"),
 										   "LastName":participant_o[0].get("LastName"),
 										   "Profile_picture":participant_o[0].get("Profile_picture"),
-										   "idid":participant_o[0].id};
+										   "idid":participant_o[0].id,
+										   "yourself":yourself};
 
+
+						console.log("participant");
 						console.log(JSON.stringify(participant));
 						participant_obj.set(participant_role[i],participant);
 						console.log("participant_obj");

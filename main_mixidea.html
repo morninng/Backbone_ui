@@ -184,6 +184,12 @@
             <a href= ./profile.html#show_profile/<%= participant_obj.PM_key.idid %> > <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %> </a>
             <br>
             <img src= <%= participant_obj.PM_key.Profile_picture %> >
+            <span id="event_PM"></span>
+              <% if( participant_obj.PM_key.yourself == true ) { %>
+                
+                <button id="cancel_PM" class="btn btn-inverse"><i class="glyphicon glyphicon-book"></i> Cancel</button>
+              <% } %>
+
           <% }else{ %>
             <span id="event_PM"></span>
             <button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
