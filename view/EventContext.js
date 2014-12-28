@@ -22,7 +22,8 @@ var EventContext = Backbone.View.extend({
 		'click #join_MG': 'Participate_MG',
 		'click #join_MO': 'Participate_MO',
 		'click #join_LOR': 'Participate_LOR',
-		'click #join_RPM': 'Participate_RPM'
+		'click #join_RPM': 'Participate_RPM',
+		'click #join_RPM': 'click_profile'
 	},
 
 	Participate_PM: function(){

@@ -173,23 +173,25 @@
 
     <table class="table table-bordered">
       <thead>
-        <tr>PM_obj
+        <tr>
           <th>Government</th><th>Opposition</th>
         </tr>
       </thead>
       <tbody>
        <tr>
-         <td>Prime Minister<br><span id="event_PM"></span><br>
+        <td>Prime Minister:
           <% if(participant_obj.PM_key) { %>
-            <a id="PM_link">
-              <img src= <%= participant_obj.PM_key.Profile_picture %> >
-              <p>Name: <%= participant_obj.PM_key.LastName %> </p>
-            </a>
+            <a id="PM_link"  href= ./profile.html#show_profile/<%= participant_obj.PM_key.id %> > <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %> </a>
+            <br>
+            <img src= <%= participant_obj.PM_key.Profile_picture %> >
           <% }else{ %>
+            <span id="event_PM"></span>
             <button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
           <% } %>
-          </td>
-         <td>Leader of Opposition<br><span id="event_LO"></span><br><button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
+        </td>
+
+        <td>Leader of Opposition:<br><span id="event_LO"></span><br><button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+        </td>
        </tr>
        <tr>
          <td>Member of Government<span id="event_MG"></span><br><button id="join_MG" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button></td>
