@@ -350,15 +350,14 @@ var EventContext = Backbone.View.extend({
 		}
 		return self;
 	},
+
 	showHangoutButton: function(){
 
 		var self = this;
-
 		if(!self.isHangoutButtton){
     		var hangout_button_string = "<a id='event_hangout_button'  style='text-decoration:none;'><img src='https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png' alt='Start a Hangout' style='border:0;width:230px;height:60px;'/></a>";
     		$("#hangout_area").append(hangout_button_string);
 			self.isHangoutButtton = true;
-
 			self.model.fetch({
 				success: function(one_event_obj){
 					if(!one_event_obj.get("hangout_url")){
@@ -371,16 +370,24 @@ var EventContext = Backbone.View.extend({
 
 	},
 	EventHangoutClick: function(){
-
 		var self = this;
-
-		var hangout_domain = self.model.get("hangout_url");
+		self.model.fetch({
+			success: function(one_event_obj){
+				var registered_hangout_url = one_event_obj.get("hangout_url");
+				if(registered_hangout_url){
+					self.GoToHangoutPage(registered_hangout_url, config_hangout_app_id_Debate_NA);
+				}else{
+					self.GoToHangoutPage(default_hangout_url, config_hangout_app_id_Registration);
+				}
+			}
+		});
+		return self;
+	}, 
+	GoToHangoutPage: function(hangout_domain , hangout_app_id){
+		var self = this;
 		var currentUser = Parse.User.current();
-		console.log(hangout_domain);
+		var hangout_gid = "?gid=";
 		var event_id = self.model.id;
-		console.log(event_id);
-		var hangout_gid = "?gid="
-		var hangout_app_id = config_hangout_app_id;
 		var hangout_query_key = "&gd=";
 		var hangout_query_value = currentUser.id;
 		var hangout_query_split = "_";
@@ -389,9 +396,10 @@ var EventContext = Backbone.View.extend({
 						 + hangout_query_value + hangout_query_split + hangout_second_query_value;
 		console.log(hangout_link);
 		location.href = hangout_link;
-		return self;
 
+		return self;		
 	},
+
 	render: function(){
 		var self=this;
 		return self;
