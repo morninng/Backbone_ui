@@ -1,4 +1,5 @@
 
+
 var EventContext = Backbone.View.extend({
 
 	template: _.template( $('#one-event-context-template').html()),
@@ -28,7 +29,8 @@ var EventContext = Backbone.View.extend({
 		'click #cancel_MG': 'cancel_MG_participate',
 		'click #cancel_MO': 'cancel_MO_participate',
 		'click #cancel_RPM': 'cancel_RPM_participate',
-		'click #cancel_LOR': 'cancel_LOR_participate'
+		'click #cancel_LOR': 'cancel_LOR_participate',
+		'click #event_hangout_button': 'EventHangoutClick'
 	},
 	cancel_PM_participate: function(){
 		console.log("cancel PM role");
@@ -56,7 +58,8 @@ var EventContext = Backbone.View.extend({
 				self.model.set("PrimeMinister",currentUser);
 				self.model.save(null,{
 					success: function(){
-						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Prime Minister<p>");	
+						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Prime Minister<p>");
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -92,6 +95,7 @@ var EventContext = Backbone.View.extend({
 				self.model.save(null,{
 					success: function(){
 						$("span#event_LO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition<p>");	
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -249,22 +253,10 @@ var EventContext = Backbone.View.extend({
 	},
 	showEvent: function(){
 		self=this;
-		
-		var hangout_domain = self.model.get("hangout_url");
 		var currentUser = Parse.User.current();
-		console.log(hangout_domain);
 		var event_id = self.model.id;
-		console.log(event_id);
-		var hangout_gid = "?gid="
-		var hangout_app_id = config_hangout_app_id;
-		var hangout_query_key = "&gd=";
-		var hangout_query_value = currentUser.id;
-		var hangout_query_split = "_";
-		var hangout_second_query_value = event_id;
-		var hangout_link= hangout_domain + hangout_gid + hangout_app_id + hangout_query_key
-						 + hangout_query_value + hangout_query_split + hangout_second_query_value;
-		console.log(hangout_link);
-		self.model.set("hangout_link", hangout_link);
+		
+
 
 		var participants = [];
 		var participant_role = [];
@@ -316,6 +308,7 @@ var EventContext = Backbone.View.extend({
 						var yourself;
 						if (currentUser.id == participant_o[0].id){
 							yourself = true;
+							self.my_participation = true;
 						}else{
 							yourself = false;
 						}
@@ -325,8 +318,6 @@ var EventContext = Backbone.View.extend({
 										   "Profile_picture":participant_o[0].get("Profile_picture"),
 										   "idid":participant_o[0].id,
 										   "yourself":yourself};
-
-
 						console.log("participant");
 						console.log(JSON.stringify(participant));
 						participant_obj.set(participant_role[i],participant);
@@ -344,12 +335,54 @@ var EventContext = Backbone.View.extend({
 				console.log(JSON.stringify(self.model));
 				var output = self.template({'event_object':self.model.toJSON(), 'participant_obj': participant_obj.toJSON()});
 				self.$el.html(output);
+
+				self.showDefaultHangoutButton();
 			}
 		}
 		var i=0;
 		f1();
 	},
+	showDefaultHangoutButton: function(){
+		var self = this;
+		if(self.my_participation == true){
+			self.showHangoutButton();
+		}
+		return self;
+	},
+	showHangoutButton: function(){
 
+		var self = this;
+
+		if(!self.isHangoutButtton){
+    		var hangout_button_string = "<a id='event_hangout_button'  style='text-decoration:none;'><img src='https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png' alt='Start a Hangout' style='border:0;width:230px;height:60px;'/></a>";
+    		$("#hangout_area").append(hangout_button_string);
+			self.isHangoutButtton = true;
+    	}
+		return self;
+
+	},
+	EventHangoutClick: function(){
+
+		var self = this;
+
+		var hangout_domain = self.model.get("hangout_url");
+		var currentUser = Parse.User.current();
+		console.log(hangout_domain);
+		var event_id = self.model.id;
+		console.log(event_id);
+		var hangout_gid = "?gid="
+		var hangout_app_id = config_hangout_app_id;
+		var hangout_query_key = "&gd=";
+		var hangout_query_value = currentUser.id;
+		var hangout_query_split = "_";
+		var hangout_second_query_value = event_id;
+		var hangout_link= hangout_domain + hangout_gid + hangout_app_id + hangout_query_key
+						 + hangout_query_value + hangout_query_split + hangout_second_query_value;
+		console.log(hangout_link);
+		location.href = hangout_link;
+		return self;
+
+	},
 	render: function(){
 		var self=this;
 		return self;
