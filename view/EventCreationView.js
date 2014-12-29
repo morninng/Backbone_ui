@@ -17,10 +17,6 @@ function login_hangout(event_id){
 	location.href = hangout_link;
 };
 
-
-
-
-
  var hangout_link_pre = "<a style='text-decoration:none;' onclick=login_hangout('";
  var hangout_link_post = "') target='_blank'><img src='https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png' alt='Start a Hangout' style='border:0;width:230px;height:60px;'/>";
 

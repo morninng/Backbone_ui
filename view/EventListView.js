@@ -18,7 +18,7 @@ var EventListView = Backbone.View.extend({
 		var self=this;
 		var EventCollection = Parse.Collection.extend({
 			model: MixideaEvent,
-			query: (new Parse.Query(MixideaEvent)).exists("hangout_url")
+		//	query: (new Parse.Query(MixideaEvent)).exists("hangout_url")
 		});
 		var event_collection = new EventCollection();
 		event_collection.fetch({

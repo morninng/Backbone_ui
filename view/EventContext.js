@@ -131,6 +131,7 @@ var EventContext = Backbone.View.extend({
 				self.model.save(null,{
 					success: function(){
 						$("span#event_MG").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Government<p>");	
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -166,6 +167,7 @@ var EventContext = Backbone.View.extend({
 				self.model.save(null,{
 					success: function(){
 						$("span#event_MO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Opposition<p>");	
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -201,6 +203,7 @@ var EventContext = Backbone.View.extend({
 				self.model.save(null,{
 					success: function(){
 						$("span#event_RPM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Reply of Prime Minister<p>");	
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -236,6 +239,7 @@ var EventContext = Backbone.View.extend({
 				self.model.save(null,{
 					success: function(){
 						$("span#event_LOR").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition Reply<p>");	
+						self.showHangoutButton();
 					},
 					error: function(){
 						alert("registration has been failed due to the network problem");
@@ -255,12 +259,9 @@ var EventContext = Backbone.View.extend({
 		self=this;
 		var currentUser = Parse.User.current();
 		var event_id = self.model.id;
-		
-
 
 		var participants = [];
 		var participant_role = [];
-
 
 		var PM_object = self.model.get("PrimeMinister");
 		if(PM_object){
@@ -357,7 +358,15 @@ var EventContext = Backbone.View.extend({
     		var hangout_button_string = "<a id='event_hangout_button'  style='text-decoration:none;'><img src='https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png' alt='Start a Hangout' style='border:0;width:230px;height:60px;'/></a>";
     		$("#hangout_area").append(hangout_button_string);
 			self.isHangoutButtton = true;
-    	}
+
+			self.model.fetch({
+				success: function(one_event_obj){
+					if(!one_event_obj.get("hangout_url")){
+						$("#hangout_area").append("<p>you should<font color='green'> copy and paste</font> this E-mail address<br> for invitation:<font color='red'> mr_morninng@gmail.com</font> </p>");
+					}
+				}
+    		});
+		}
 		return self;
 
 	},
