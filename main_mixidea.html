@@ -175,37 +175,65 @@
       </thead>
       <tbody>
        <tr>
-        <td>Prime Minister:
-          <% if(participant_obj.PM_key) { %>
-            <a href= ./profile.html#show_profile/<%= participant_obj.PM_key.idid %> > <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %> </a>
-            <br>
-            <img src= <%= participant_obj.PM_key.Profile_picture %> >
-            <span id="event_PM"></span>
-                <% if( participant_obj.PM_key.yourself == true ) { %>
-                  
-                  <button id="cancel_PM" class="btn btn-inverse"><i class="glyphicon glyphicon-book"></i> Cancel</button>
-                <% } %>
-          <% }else{ %>
-            <span id="event_PM"></span>
-            <button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
-          <% } %>
+
+        <td>
+          <div id = "PM_container">
+           <div class="role"> <p><font-weight: bol>Prime Minister</font-weight></p></div>
+           <div class="participant" style="float:left;">
+              <% if(participant_obj.PM_key) { %>
+                <div class = "image_container" style="float:left; margin-left:5px;">
+                  <img src= <%= participant_obj.PM_key.Profile_picture %> >
+                </div>
+                <div class = "profile_container" style="float:left; margin-left:10px;" >
+                  <a href= ./profile.html#show_profile/<%= participant_obj.PM_key.idid %> > 
+                    <%= participant_obj.PM_key.FirstName %>  <%= participant_obj.PM_key.LastName %>
+                  </a>
+                </div>
+              <% } %>
+           </div>
+           <div class="event_button" style="float:right;margin-right:5px; margin-left:5px;">
+              <% if( !participant_obj.PM_key) { %>
+                <button id="join_PM" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+              <% }else{ %>
+                  <% if( participant_obj.PM_key.yourself == true ) { %>
+                    <button id="cancel_PM" class="btn btn-inverse"><i class="glyphicon glyphicon-book"></i> Cancel</button>
+                  <% } %>
+              <% } %>
+           </div>
+           <div class="comment" style="clear:both">
+              <span id="event_PM"></span>
+           </div>
         </td>
 
-        <td>Leader of Opposition:
-          <% if(participant_obj.LO_key) { %>
-            <a href= ./profile.html#show_profile/<%= participant_obj.LO_key.idid %> > <%= participant_obj.LO_key.FirstName %>  <%= participant_obj.LO_key.LastName %> </a>
-            <br>
-            <img src= <%= participant_obj.LO_key.Profile_picture %> >  
-            <span id="event_LO"></span>
-                <% if( participant_obj.LO_key.yourself == true ) { %>
-                  
-                  <button id="cancel_LO" class="btn btn-inverse"><i class="glyphicon glyphicon-book"></i> Cancel</button>
-                <% } %>
-          <% }else{ %>
-            <span id="event_LO"></span>
-            <button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
-          <% } %>
+        <td>
+          <div id = "LO_container">
+           <div class="role"> <p><font-weight: bol>Leader Opposition</font-weight></p></div>
+           <div class="participant" style="float:left;">
+              <% if(participant_obj.LO_key) { %>
+                <div class = "image_container" style="float:left; margin-left:5px;">
+                  <img src= <%= participant_obj.LO_key.Profile_picture %> >
+                </div>
+                <div class = "profile_container" style="float:left; margin-left:10px;" >
+                  <a href= ./profile.html#show_profile/<%= participant_obj.LO_key.idid %> > 
+                    <%= participant_obj.LO_key.FirstName %>  <%= participant_obj.LO_key.LastName %>
+                  </a>
+                </div>
+              <% } %>
+           </div>
+           <div class="event_button" style="float:right;margin-right:5px; margin-left:5px;">
+              <% if( !participant_obj.LO_key) { %>
+                <button id="join_LO" class="btn btn-primary"><i class="glyphicon glyphicon-book"></i> Join</button>
+              <% }else{ %>
+                  <% if( participant_obj.LO_key.yourself == true ) { %>
+                    <button id="cancel_LO" class="btn btn-inverse"><i class="glyphicon glyphicon-book"></i> Cancel</button>
+                  <% } %>
+              <% } %>
+           </div>
+           <div class="comment" style="clear:both">
+              <span id="event_LO"></span>
+           </div>
         </td>
+
        </tr>
        <tr>
          <td>Member of Government:
@@ -301,7 +329,7 @@
     <input type="time" id="event_start_time" name="time">
     <input type="number" id="event_duration" name="duration">
 
-    <button type="submit" class="btn btn-default">Submit</button><br>
+    <button type="submit" class="btn btn-default">Submit</button><>
     <span id="hangout_btn_event_create"><span>
   </script>
 
