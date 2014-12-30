@@ -1,27 +1,3 @@
- 
-
-function login_hangout(event_id){
-
-	console.log("login hangout");
-
-	Parse.initialize("wxaNxdtmCOUJm8QHPYr8khYkFJiBTMvEnv1jCDZg", "OuSaCarL4ltnPsuwptJMBvoZ7v3071MCUE7Y5MfD");
-	var currentUser = Parse.User.current();
-
-	var hagout_domain = "https://plus.google.com/hangouts/_?"
-	var hangout_gid = "gid=172012775158"
-	var hangout_query_key = "&gd=";
-	var hangout_query_value = currentUser.id;
-	var hangout_query_split = "_";
-	var hangout_second_query_value = event_id;
-	var hangout_link= hagout_domain + hangout_gid + hangout_query_key + hangout_query_value + hangout_query_split + hangout_second_query_value;
-	location.href = hangout_link;
-};
-
- var hangout_link_pre = "<a style='text-decoration:none;' onclick=login_hangout('";
- var hangout_link_post = "') target='_blank'><img src='https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-60x230-normal.png' alt='Start a Hangout' style='border:0;width:230px;height:60px;'/>";
-
-
-
 
 var CreateEventView = Backbone.View.extend({
 
@@ -43,7 +19,8 @@ var CreateEventView = Backbone.View.extend({
 	},
 
 	events: {
-	   'submit form': 'onSubmit'
+	   'submit form': 'onSubmit',
+		'click #event_hangout_button': 'EventHangoutClick'
 	},
 
 	onSubmit: function(e) {
@@ -61,15 +38,13 @@ var CreateEventView = Backbone.View.extend({
         	return self.model.save();
     	}).then(function(){
     		console.log("success to save" + self.model.id);
-    		self.addHangOut_Event(self.model.id);
+    		var hangout_element = $("#hangout_btn_event_create");
+    		showHangoutButton( hangout_element,self.model)
+
     	});
   	},
-
-  	addHangOut_Event: function(event_id){
-    
-    	console.log("add hangout");
-    	self.$el.append(hangout_link_pre + event_id + hangout_link_post);
-   
+  	EventHangoutClick: function(){
+		Util_EventHangoutClick(self.model);
   	}
 
 });
