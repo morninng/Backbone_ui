@@ -2,6 +2,63 @@
 var Parse_Role_Name = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply" ];
 var event_span_name = ["#event_PM","#event_LO","#event_MG","#event_MO","#event_RPM","#event_LOR"];
 var Debate_Role_name = [  "Prime Minister", "Leader Opposition", "Member Government", "Member Opposition", "eply Prime Minister", "Leader Opposition Reply"];
+var Join_btn_id = ["join_PM","join_LO","join_MG","join_MO","join_RPM","join_LOR"];
+var Cancel_btn_id = ["cancel_PM","cancel_LO","cancel_MG","cancel_MO","cancel_RPM","cancel_LOR"];
+var Role_Container = ["#PM_container","#LO_container","#MG_container","#MO_container","#RPM_container","#LOR_container"];
+
+
+function Put_CurrentUser_Profile(num_role){
+
+	var currentUser = Parse.User.current();
+
+	var profile_picture_link = currentUser.get("Profile_picture");
+	var profile_first_name = currentUser.get("FirstName");
+	var profile_last_name = currentUser.get("LastName");
+	var profile_id = currentUser.id;
+
+	var image_pre_str = "<div class = 'image_container' style='float:left; margin-left:5px;'><img src=";
+	var image_post_str = "></div>";
+	var profile_pre_str = "<div class='profile_container' style='float:left; margin-left:10px;' ><a href=./profijoinle.html#show_profile/";
+	var profile_mid = ">";
+	var profile_post = "</a></div>";
+
+	$(Role_Container[num_role]).children(".participant").append(image_pre_str + profile_picture_link + image_post_str);
+	$(Role_Container[num_role]).children(".participant").append(profile_pre_str + profile_id + profile_mid + profile_post);
+
+}
+function Remove_CurrentUser_Profile(num_role){
+	$(Role_Container[num_role]).children(".participant").html("");
+	
+}
+function Set_Join_Button(num_role){
+
+	var button_pre = "<button id='";
+	var button_post = "' class='btn btn-primary'><i class='glyphicon glyphicon-book'></i> Join</button>";
+	var button_id = Join_btn_id[num_role];
+
+	$(Role_Container[num_role]).children(".event_button").html(button_pre + button_id + button_post);
+}
+function Set_Cancel_Button(num_role){
+
+	var button_pre = "<button id='";
+	var button_post = "' class='btn btn-inverse'><i class='glyphicon glyphicon-book'></i> Cancel</button>";
+	var button_id = Cancel_btn_id[num_role];
+
+	$(Role_Container[num_role]).children(".event_button").html(button_pre + button_id + button_post);
+
+
+}
+function Cancel_Success_Message(num_role){
+	$(event_span_name[num_role]).html("<p><font color='green'>Cancelation success</font><p>");
+				
+}
+function Regist_Success_Message(num_role){
+	$(event_span_name[num_role]).html("<p><font color='green'>Registration success</font>you have now joined this event as a" + Debate_Role_name[num_role] + "<p>");				
+}
+function Regist_Failure_Message(num_role){
+	$(event_span_name[num_role]).html("<p><font color='red'>Registration failed</font>" * Debate_Role_name[num_role] * " was already assingned to others. please register other role.<p>" );			
+}
+
 
 function Click_Participate_button( event_object, num_role){
 	console.log("participate as " + Debate_Role_name[num_role]);
@@ -9,15 +66,17 @@ function Click_Participate_button( event_object, num_role){
 	var currentUser = Parse.User.current();
 	event_object.fetch().then(function(event_obj){
 		if(event_obj.get(Parse_Role_Name[num_role])){
-			$(event_span_name[num_role]).html("<p><font color='red'>Registration failed</font>" * Debate_Role_name[num_role] * " was already assingned to others. please register other role.<p>" );
+			Regist_Failure_Message(num_role);
 			return null;
 		}else{
 			self.model.set(Parse_Role_Name[num_role],currentUser);
 			self.model.save(null,{
 				success: function(){
-					$(event_span_name[num_role]).append("<p><font color='green'>Registration success</font>you have now joined this event as a" + Debate_Role_name[num_role] + "<p>");
 					var hangout_element = $("#hangout_area");
 					showHangoutButton(hangout_element, event_object);
+					Regist_Success_Message(num_role);
+					Set_Cancel_Button(num_role);
+					Put_CurrentUser_Profile(num_role);
 				},
 				error: function(){
 					alert("registration has been failed due to the network problem");
@@ -38,7 +97,9 @@ function Click_Cancel_button( event_object, num_role){
 				event_obj.unset(Parse_Role_Name[num_role]);
 				return event_obj.save();
 			}).then(function(){
-				$(event_span_name[num_role]).append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
+				Cancel_Success_Message(num_role);
+				Set_Join_Button(num_role);
+				Remove_CurrentUser_Profile(num_role);
 			});
 		}
 }
