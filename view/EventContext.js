@@ -1,4 +1,47 @@
 
+var Parse_Role_Name = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply" ];
+var event_span_name = ["#event_PM","#event_LO","#event_MG","#event_MO","#event_RPM","#event_LOR"];
+var Debate_Role_name = [  "Prime Minister", "Leader Opposition", "Member Government", "Member Opposition", "eply Prime Minister", "Leader Opposition Reply"];
+
+function Click_Participate_button( event_object, num_role){
+	console.log("participate as " + Debate_Role_name[num_role]);
+
+	var currentUser = Parse.User.current();
+	event_object.fetch().then(function(event_obj){
+		if(event_obj.get(Parse_Role_Name[num_role])){
+			$(event_span_name[num_role]).html("<p><font color='red'>Registration failed</font>" * Debate_Role_name[num_role] * " was already assingned to others. please register other role.<p>" );
+			return null;
+		}else{
+			self.model.set(Parse_Role_Name[num_role],currentUser);
+			self.model.save(null,{
+				success: function(){
+					$(event_span_name[num_role]).append("<p><font color='green'>Registration success</font>you have now joined this event as a" + Debate_Role_name[num_role] + "<p>");
+					var hangout_element = $("#hangout_area");
+					showHangoutButton(hangout_element, event_object);
+				},
+				error: function(){
+					alert("registration has been failed due to the network problem");
+				}
+			});
+		}
+	});
+}
+
+function Click_Cancel_button( event_object, num_role){
+		console.log("cancel" + Debate_Role_name[num_role] );
+		var currentUser = Parse.User.current();
+
+		if(currentUser.id != event_object.get(Parse_Role_Name[num_role]).id){
+			alert("you cannot change the status");
+		}else{
+			event_object.fetch().then(function(event_obj){
+				event_obj.unset(Parse_Role_Name[num_role]);
+				return event_obj.save();
+			}).then(function(){
+				$(event_span_name[num_role]).append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
+			});
+		}
+}
 
 var EventContext = Backbone.View.extend({
 
@@ -12,11 +55,8 @@ var EventContext = Backbone.View.extend({
 		self.showEvent();
 		self.isHangoutButton = false;
 
-
-		self.render();
 		return self;
 	},
-
 	events: {
 		'click #join_PM': 'Participate_PM',
 		'click #join_LO': 'Participate_LO',
@@ -33,226 +73,40 @@ var EventContext = Backbone.View.extend({
 		'click #event_hangout_button': 'EventHangoutClick'
 	},
 	cancel_PM_participate: function(){
-		console.log("cancel PM role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("PrimeMinister").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("PrimeMinister");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_PM").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page and login<p>");
-			});
-		}
+		Click_Cancel_button(  self.model, 0);
 	},
 	Participate_PM: function(){
-		console.log("participate as PM")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("PrimeMinister")){
-				$("span#event_PM").append("<p><font color='red'>Registration failed</font>Prime Minister was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("PrimeMinister",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_PM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Prime Minister<p>");
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 0);
 	},
 	cancel_LO_participate: function(){
-		console.log("cancel LO role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("LeaderOpposition").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("LeaderOpposition");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_LO").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
-			});
-		}
-	},	
+		Click_Cancel_button(  self.model, 1);
+	},
 	Participate_LO: function(){
-		console.log("participate as LO")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("LeaderOpposition")){
-				$("span#event_LO").append("<p><font color='red'>Registration failed</font>Leader Opposition was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("LeaderOpposition",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_LO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition<p>");	
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 1);
 	},
 	cancel_MG_participate: function(){
-		console.log("cancel MG role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("MemberGovernment").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("MemberGovernment");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_MG").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
-			});
-		}
+		Click_Cancel_button(  self.model, 2);
 	},	
 	Participate_MG: function(){
-		console.log("participate as MG")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("MemberGovernment")){
-				$("span#event_MG").append("<p><font color='red'>Registration failed</font>Member Government was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("MemberGovernment",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_MG").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Government<p>");	
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 2);
 	},
 	cancel_MO_participate: function(){
-		console.log("cancel MO role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("MemberOpposition").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("MemberOpposition");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_MO").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
-			});
-		}
+		Click_Cancel_button(  self.model, 3);
 	},	
 	Participate_MO: function(){
-		console.log("participate as MO")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("MemberOpposition")){
-				$("span#event_MO").append("<p><font color='red'>Registration failed</font>Member Opposition was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("MemberOpposition",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_MO").append("<p><font color='green'>Registration success</font>you have now joined this event as a Member Opposition<p>");	
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 3);
 	},
 	cancel_RPM_participate: function(){
-		console.log("cancel RPM role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("ReplyPM").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("ReplyPM");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_RPM").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
-			});
-		}
+		Click_Cancel_button(  self.model, 4);
 	},	
 	Participate_RPM: function(){
-		console.log("participate as RPM")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("ReplyPM")){
-				$("span#event_RPM").append("<p><font color='red'>Registration failed</font>Reply Prime Minister was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("ReplyPM",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_RPM").append("<p><font color='green'>Registration success</font>you have now joined this event as a Reply of Prime Minister<p>");	
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 4);
 	},
 	cancel_LOR_participate: function(){
-		console.log("cancel LOR role");
-		var currentUser = Parse.User.current();
-
-		if(currentUser.id != self.model.get("LOReply").id){
-			alert("you cannot change the status");
-		}else{
-			self.model.fetch().then(function(event_obj){
-				event_obj.unset("LOReply");
-				return event_obj.save();
-			}).then(function(){
-				$("span#event_LOR").append("<p><font color='green'>Cancelation success</font>If you want to participate, you can reload this page again<p>");
-			});
-		}
+		Click_Cancel_button(  self.model, 5);
 	},	
 	Participate_LOR: function(){
-		console.log("participate as LOR")
-		var currentUser = Parse.User.current();
-		self.model.fetch().then(function(event_obj){
-			if(event_obj.get("LOReply")){
-				$("span#event_LOR").append("<p><font color='red'>Registration failed</font>Leader Opposition Reply was already assingned to others. please register other role.<p>" );
-				return null;
-			}else{
-				self.model.set("LOReply",currentUser);
-				self.model.save(null,{
-					success: function(){
-						$("span#event_LOR").append("<p><font color='green'>Registration success</font>you have now joined this event as a Leader Opposition Reply<p>");	
-						var hangout_element = $("#hangout_area");
-						showHangoutButton(hangout_element, self.model);
-					},
-					error: function(){
-						alert("registration has been failed due to the network problem");
-					}
-				});
-			}
-		});
+		Click_Participate_button( self.model, 5);
 	},
 	AddHangoutButton: function(){
 		console.log("add hangout button")
@@ -292,7 +146,7 @@ var EventContext = Backbone.View.extend({
 		var PMR_object = self.model.get("ReplyPM");
 		if(PMR_object){
 			participants.push(PMR_object);
-			participant_role.push("PMR_key");
+			participant_role.push("RPM_key");
 		}
 		var LOR_object = self.model.get("LOReply");
 		if(LOR_object){
